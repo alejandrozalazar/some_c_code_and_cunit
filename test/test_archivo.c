@@ -65,4 +65,4 @@ static CU_TestInfo tests[] = {
 	CU_TEST_INFO_NULL,
 };
 
-CUNIT_MAKE_SUITE(archivo, "Nombre del suite", init_suite, clean_suite, tests)
+CUNIT_MAKE_SUITE(archivo, "Tests de archivo", init_suite, clean_suite, tests)
