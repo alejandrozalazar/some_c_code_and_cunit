@@ -40,21 +40,22 @@ int useLs() {
 	 int filedes[2];
 	    int filedes2[2];
 	    int filedes3[2];
-	    int filedes4[2];
+//	    int filedes4[2];
 	    pipe(filedes);
 	    pipe(filedes2);
 	    pipe(filedes3);
-	    pipe(filedes4);
+//	    pipe(filedes4);
 
 	    pid_t pid = fork();
 	    if (pid == 0) {
 	        dup2(filedes[WRITE], 1);
 	    char *argv[] = {"cat", "/tmp/1.txt", NULL};
-	        execv("/bin/cat", argv);
+	        int result = execv("/bin/cat", argv);
+	        printf("proc %d, if CAT file result = %d\n", result, pid);
 	    }
 	    else {
 	        close(filedes[1]);
-	        printf("else 1\n");
+	        printf("proc %d, if ELSE CAT file\n", pid);
 	    }
 
 	    pid_t pid2 = fork();
@@ -62,11 +63,12 @@ int useLs() {
 	    dup2(filedes[READ], 0);
 	    dup2(filedes2[WRITE], 1);
 	        char *argv[] = {"fakemap.sh", "-c", NULL};
-	        execv("/home/utnso/Documentos/fakemap.sh", argv);
+	        int result = execv("/home/utnso/Documentos/fakemap.sh", argv);
+	        printf("proc %d, if MAP file result = %d\n", result, pid2);
 	    }
 	    else {
 	        close(filedes2[1]);
-	        printf("else 2\n");
+	        printf("proc %d, if ELSE MAP file\n", pid2);
 	    }
 
 	    pid_t pid3 = fork();
@@ -76,10 +78,11 @@ int useLs() {
 	        dup2(filedes2[READ], 0);
 	        dup2(filedes3[WRITE], 1);
 	        char *argv1[] = {"sort", NULL};
-			execv("/usr/bin/sort", argv1);
+			int result = execv("/usr/bin/sort", argv1);
+			printf("proc %d, if SORT file result = %d\n", result, pid3);
 	    } else {
 	    	close(filedes3[1]);
-	    	printf("else 3\n");
+	    	printf("proc %d, if ELSE SORT file\n", pid3);
 	    }
 
 	    pid_t pid4 = fork();
@@ -89,10 +92,11 @@ int useLs() {
 	        dup2(filedes3[READ], 0);
 	        dup2(fd, 1);
 	        char *argv1[] = {"fakereduce.sh", NULL};
-			execv("/home/utnso/Documentos/fakereduce.sh", argv1);
+			int result = execv("/home/utnso/Documentos/fakereduce.sh", argv1);
+			printf("proc %d, if REDUCE file result = %d\n", result, pid4);
 	    } else {
 
-	    	printf("else 4\n");
+	    	printf("proc %d, if ELSE REDUCE file\n", pid4);
 	    }
 
 
@@ -104,7 +108,16 @@ int useLs() {
 	    dprintf(fd, "%s\n", asctime (localtime (&now)));
 
 	    close(fd);
-	    close(filedes3);
+	    close(filedes3[0]);
+	    close(filedes3[1]);
+	    close(filedes[0]);
+	    close(filedes[1]);
+	    close(filedes2[0]);
+	    close(filedes2[1]);
+//	    close(filedes4[0]);
+//	    close(filedes4[1]);
 	    printf("closing\n");
 	    return 0;
 }
+
+
