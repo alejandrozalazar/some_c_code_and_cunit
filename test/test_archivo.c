@@ -59,9 +59,9 @@ static void test_contar_devuelve_0_si_no_hay_ocurrencias() {
 }
 
 static CU_TestInfo tests[] = {
-	{ "Test 1a", test_contar_devuelve_menos1_si_el_archivo_no_existe },
-	{ "Test 1b", test_contar_devuelve_el_numero_exacto_de_ocurrencias },
-	{ "Test 1c", test_contar_devuelve_0_si_no_hay_ocurrencias },
+//	{ "Test 1a", test_contar_devuelve_menos1_si_el_archivo_no_existe },
+//	{ "Test 1b", test_contar_devuelve_el_numero_exacto_de_ocurrencias },
+//	{ "Test 1c", test_contar_devuelve_0_si_no_hay_ocurrencias },
 	CU_TEST_INFO_NULL,
 };
 
